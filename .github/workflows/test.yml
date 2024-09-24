@@ -29,7 +29,7 @@ jobs:
     - name: Fetch User Credentials from AWS Secrets Manager
       id: fetch-credentials
       run: |
-        SECRET=$(aws secretsmanager get-secret-value --secret-id <your-secret-name> --query SecretString --output text)
+        SECRET=$(aws secretsmanager get-secret-value --secret-id vais-test-secret --query SecretString --output text)
         echo "Retrieved Secret: $SECRET"
         echo "::set-output name=credentials::$SECRET"
 
