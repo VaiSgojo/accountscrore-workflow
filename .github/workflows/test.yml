@@ -1,0 +1,39 @@
+name: Fetch-AWS-Secrets
+
+on:
+  workflow_dispatch:
+
+jobs:
+  fetch-credentials:
+    runs-on: 
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    # Step to configure AWS credentials from GitHub Secrets
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v2
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ secrets.AWS_REGION }}
+
+    # Step to install AWS CLI
+    - name: Install AWS CLI
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y awscli jq
+
+    # Step to retrieve credentials from AWS Secrets Manager
+    - name: Fetch User Credentials from AWS Secrets Manager
+      id: fetch-credentials
+      run: |
+        SECRET=$(aws secretsmanager get-secret-value --secret-id <your-secret-name> --query SecretString --output text)
+        echo "Retrieved Secret: $SECRET"
+        echo "::set-output name=credentials::$SECRET"
+
+    # Step to print the fetched credentials
+    - name: Print Fetched Credentials
+      run: |
+        echo "User credentials: ${{ steps.fetch-credentials.outputs.credentials }}"
