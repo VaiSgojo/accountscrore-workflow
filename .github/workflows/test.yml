@@ -11,13 +11,13 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    # Step to configure AWS credentials from GitHub Secrets
-    - name: Configure AWS Credentials
+    # Step to configure AWS credentials using web identity
+    - name: Configure AWS Credentials using Web Identity
       uses: aws-actions/configure-aws-credentials@v2
       with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: ${{ secrets.AWS_REGION }}
+        role-to-assume: arn:aws:iam::752354625103:role/vais-test
+        aws-region: us-east-1
+        role-session-name: github-actions-session
 
     # Step to install AWS CLI
     - name: Install AWS CLI
