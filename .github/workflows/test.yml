@@ -16,7 +16,7 @@ jobs:
       uses: aws-actions/configure-aws-credentials@v2
       with:
         role-to-assume: arn:aws:iam::752354625103:role/vais-test
-        aws-region: us-east-1
+        aws-region: eu-west-1
         role-session-name: github-actions-session
 
     # Step to install AWS CLI
