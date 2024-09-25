@@ -17,7 +17,7 @@ jobs:
 
     # Step to configure AWS credentials using web identity
     - name: Configure AWS Credentials using Web Identity
-      uses: aws-actions/configure-aws-credentials@v2
+      uses: aws-actions/configure-aws-credentials@v3
       with:
         role-to-assume: arn:aws:iam::752354625103:role/vais-test
         aws-region: eu-west-1
